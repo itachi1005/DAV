@@ -1,11 +1,41 @@
 import pandas as pd
-df =pd.read_csv('https://raw.githubusercontent.com/codebasics/py/refs/heads/master/pandas/15_ts_date_range/aapl_no_dates.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/codebasics/py/refs/heads/master/pandas/15_ts_date_range/aapl_no_dates.csv')
 df.head()
 
 rng = pd.date_range(start='6/1/2017', end='6/30/2017', freq='B')
 rng
 
-df.set_index(rng,inplace=True)
+df.set_index(rng, inplace=True)
 df
 
 df.Close.plot()
+
+df['2017-06-01':'2017-06-10'].Close.mean()
+
+df.asfreq('D', method='pad')
+
+df.asfreq('W', method='pad')
+
+df.asfreq('D', method='pad').Close.plot()
+
+df.asfreq('H', method='pad')
+
+rng = pd.date_range(start='1/1/2017', periods=72, freq='H')
+
+import numpy as np
+rng_generator = np.random.Generator(np.random.PCG64())
+
+ts = pd.Series(rng_generator.integers(low=1, high=10, size=len(rng)), index=rng)
+ts.head()
+
+!pip install mplfinance
+
+import mplfinance as mpf
+mpf.plot(
+    df,
+    type="candle",
+    style="yahoo",
+    title="Candlestick Chart",
+    ylabel="Price",
+    figsize=(12, 6)
+)

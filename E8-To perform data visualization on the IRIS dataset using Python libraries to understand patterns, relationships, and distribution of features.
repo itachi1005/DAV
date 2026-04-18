@@ -1,0 +1,67 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings('ignore')
+iris = pd.read_csv('https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv')
+iris
+
+iris['species'].value_counts()
+
+iris.plot(kind='scatter', x='sepal_length', y='sepal_width')
+
+sns.scatterplot(iris, x='sepal_length', y='sepal_width')
+
+sns.jointplot(data=iris, x='sepal_length', y='sepal_width')
+
+iris.shape
+
+iris.info()
+sns.FacetGrid(iris, hue='species') \
+.map(plt.scatter, 'sepal_length', 'sepal_width') \
+.add_legend()
+
+sns.scatterplot(iris, x='sepal_length', y='sepal_width', hue='species')
+
+sns.boxplot(x='species', y='petal_length', data=iris)
+
+ax = sns.boxplot(x='species', y='petal_length', data=iris)
+ax = sns.stripplot(x='species', y='petal_length', data=iris)
+iris.head()
+
+sns.pairplot(iris, hue='species', size=4)
+
+sns.pairplot(iris, size=3)
+
+sns.kdeplot(iris, fill=True)
+
+sns.kdeplot(iris[iris['species'] == 'virginica'], fill=True)
+
+sns.countplot(data=iris, x='sepal_width', hue='species')
+
+sns.catplot(data=iris, x='sepal_width', hue='species')
+
+sns.catplot(data=iris, x='sepal_width', hue='species')
+data = {'Name': ['ANSH', 'SAHIL', 'JAYAN', 'ANURAG'], 'Age': [21, 23, 20, 24]}
+df = pd.DataFrame(data)
+plt.plot(df.index, df['Age'])
+plt.xlabel('Index')
+plt.ylabel('Age')
+plt.title('Age Line Plot')
+plt.show()
+
+sns.barplot(x='Name', y='Age', data=df)
+plt.show()
+
+sns.pointplot(x='Name', y='Age', data=df)
+plt.show()
+
+corr = iris.corr(numeric_only=True)
+sns.heatmap(corr, annot=True, cmap='coolwarm')
+plt.show()
+
+corr = iris.corr(numeric_only=True)
+corr
+
+sns.heatmap(corr, annot=True, cmap='coolwarm')

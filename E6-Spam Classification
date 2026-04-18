@@ -1,0 +1,53 @@
+import pandas as pd
+import numpy as np
+df = pd.read_csv("https://raw.githubusercontent.com/codebasics/nlp-tutorials/refs/heads/main/9_bag_of_words/spam.csv")
+df.head()
+
+df.Category.value_counts()
+
+df['spam'] = df['Category'].apply(lambda x: 1 if x=='spam' else 0)
+df
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(df.Message, df.spam, test_size=0.2, random_state=42)
+X_train.shape
+
+X_test.shape
+
+from sklearn.feature_extraction.text import CountVectorizer
+v = CountVectorizer()
+X_train_cv = v.fit_transform(X_train.values)
+X_train_cv
+
+X_train_np = X_train_cv.toarray()
+X_train_np[5]
+
+np.where (X_train_np[0]!=0)
+
+X_train_np
+
+from sklearn.naive_bayes import MultinomialNB
+model = MultinomialNB()
+model.fit(X_train_cv, y_train)
+
+X_test_cv = v.transform(X_test)
+X_test_cv
+
+X_test_np = X_test_cv.toarray()
+X_test_np
+
+from sklearn.metrics import classification_report
+model.predict(X_test_cv)
+y_pred
+
+print(classification_report(y_test, y_pred))
+
+emails = [
+    'Hey mohan, can we get together to watch footbal game tomorrow?',
+    'Upto 20% discount on parking, exclusive offer just for you. Dont miss this reward!'
+]
+emails_count = v.transform(emails)
+emails_count
+emails_count.toarray()
+
+model.predict(emails_count)

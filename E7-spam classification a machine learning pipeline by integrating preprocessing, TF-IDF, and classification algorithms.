@@ -1,0 +1,32 @@
+import pandas as pd
+import numpy as np
+df = pd.read_csv('https://raw.githubusercontent.com/codebasics/nlp-tutorials/refs/heads/main/9_bag_of_words/spam.csv')
+df
+
+df.Category.value_counts()
+
+df['spam'] = df['Category'].apply(lambda x: 1 if x =='spam' else 0)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(df.Message,
+df.spam, test_size=0.2)
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import Pipeline
+clf = Pipeline([
+('vectorizer', CountVectorizer()),
+('nb', MultinomialNB())
+])
+clf.fit(X_train, y_train)
+
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+y_pred
+
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))
+
+emails = [
+"""Up to 40% offer on Flipkart, Offer ends in four hours. exclusive
+offer. Do not miss this! Hurry up, just for you """
+]
+clf.predict(emails)
